@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Wealthwise — Mobile</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#F0F4F8; --surface:#FFFFFF; --navy:#0F2D52; --teal:#0C8A7B;
+  --teal-lt:#E6F4F2; --amber:#D97706; --amber-lt:#FEF3C7;
+  --red:#DC2626; --red-lt:#FEE2E2; --green:#059669; --green-lt:#D1FAE5;
+  --muted:#64748B; --border:#E2E8F0; --text:#0F172A; --text-sm:#475569;
+  --shadow:0 2px 12px rgba(15,45,82,0.08); --r:16px; --r-sm:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;-webkit-font-smoothing:antialiased}
+.app{max-width:430px;margin:0 auto;position:relative}
+
+/* TOP BAR */
+.topbar{position:sticky;top:0;z-index:100;background:var(--navy);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 16px rgba(15,45,82,0.25)}
+.topbar-logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;color:#fff;letter-spacing:-0.02em}
+.topbar-logo span{color:#5EEAD4}
+.topbar-score{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:600;color:#5EEAD4;cursor:pointer}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1a4a7a 100%);padding:20px 20px 28px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(94,234,212,0.12) 0%,transparent 70%);border-radius:50%}
+.hero-label{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#5EEAD4;margin-bottom:6px}
+.hero-value{font-family:'Fraunces',serif;font-weight:700;font-size:2.6rem;color:#fff;line-height:1;letter-spacing:-0.03em}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px}
+.hero-pills{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.hero-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.12);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:5px}
+.hero-pill .dot{width:6px;height:6px;border-radius:50%}
+
+/* TABS */
+.tab-scroll{background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-scroll::-webkit-scrollbar{display:none}
+.tabs{display:flex;padding:0 20px;min-width:max-content}
+.tab{padding:14px 16px 12px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.tab.active{color:var(--navy);border-bottom-color:var(--teal)}
+
+/* SECTIONS */
+.section{display:none;padding:20px 16px;animation:fadeIn 0.3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;border:1px solid var(--border)}
+.card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px}
+.card-icon-wrap{width:42px;height:42px;border-radius:12px;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.card-title{font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;color:var(--navy);line-height:1.2}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* FIELDS */
+.field{margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+.field-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
+.field-hint{font-size:11px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0}
+.input-wrap{position:relative}
+.input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--muted);pointer-events:none}
+input[type="number"]{width:100%;height:52px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:600;padding:0 14px 0 32px;outline:none;-moz-appearance:textfield;transition:border-color 0.2s,box-shadow 0.2s,background 0.2s}
+input[type="number"]::-webkit-inner-spin-button{display:none}
+input[type="number"]:focus{border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(12,138,123,0.12)}
+
+/* WARNINGS */
+.inline-warn{margin-top:8px;border-radius:var(--r-sm);padding:10px 12px;font-size:13px;line-height:1.5;display:flex;gap:8px;align-items:flex-start;border-left:3px solid;animation:warnIn 0.25s ease}
+@keyframes warnIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1}}
+.inline-warn.ok{background:var(--green-lt);border-color:var(--green)}
+.inline-warn.caution{background:var(--amber-lt);border-color:var(--amber)}
+.inline-warn.danger{background:var(--red-lt);border-color:var(--red)}
+.inline-warn .wi{font-size:15px;flex-shrink:0;margin-top:1px}
+.inline-warn .wt{color:var(--text-sm)}
+.inline-warn .wt strong{color:var(--text)}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.stat-grid.trio{grid-template-columns:repeat(3,1fr)}
+.stat-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px}
+.stat-box.accent{background:var(--teal-lt);border-color:rgba(12,138,123,0.2)}
+.stat-box .sl{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.stat-box .sv{font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:var(--navy);line-height:1}
+.stat-box .sv.green{color:var(--green)}
+.stat-box .sv.amber{color:var(--amber)}
+.stat-box .sv.red{color:var(--red)}
+.stat-box .sv.teal{color:var(--teal)}
+.divider{height:1px;background:var(--border);margin:18px 0}
+
+/* SLIDER */
+.slider-field{margin-bottom:20px}
+.slider-val-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.slider-big{font-family:'Fraunces',serif;font-weight:700;font-size:2rem;color:var(--navy);letter-spacing:-0.03em}
+.slider-big span{font-size:1rem;color:var(--muted);font-weight:400}
+input[type="range"]{-webkit-appearance:none;width:100%;height:6px;border-radius:99px;background:var(--border);outline:none;cursor:pointer;border:none;padding:0}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 2px 8px rgba(15,45,82,0.3);cursor:pointer;transition:transform 0.15s}
+input[type="range"]:active::-webkit-slider-thumb{transform:scale(1.1)}
+input[type="range"]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 2px 8px rgba(15,45,82,0.3);cursor:pointer}
+
+/* ALLOC BAR */
+.alloc-bar-wrap{margin:16px 0 10px}
+.alloc-bar{height:14px;border-radius:99px;overflow:hidden;display:flex;background:var(--border);box-shadow:inset 0 1px 3px rgba(0,0,0,0.07)}
+.alloc-seg{height:100%;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)}
+.seg-us{background:#0C8A7B}
+.seg-intl{background:#7C3AED}
+.seg-bond{background:#2563EB}
+.alloc-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.al-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-sm)}
+.al-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* ETF */
+.etf-row{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.etf-item{display:flex;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;gap:14px}
+.etf-color-bar{width:4px;border-radius:99px;height:40px;flex-shrink:0}
+.etf-info{flex:1;min-width:0}
+.etf-ticker{font-weight:700;font-size:1rem;color:var(--navy)}
+.etf-name{font-size:11px;color:var(--muted);margin-top:2px}
+.etf-desc{font-size:10px;color:var(--muted);margin-top:2px}
+.etf-pct{font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;color:var(--navy);flex-shrink:0}
+
+/* RATE PILLS */
+.rate-pills{display:flex;gap:8px}
+.rpill{flex:1;padding:12px 8px;text-align:center;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
+.rpill .rpill-pct{font-size:1.05rem;font-weight:700;color:var(--navy)}
+.rpill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.rpill.active .rpill-pct{color:#5EEAD4}
+
+/* CHART */
+.chart-wrap{background:var(--bg);border-radius:var(--r-sm);border:1px solid var(--border);padding:16px 8px 10px;margin-top:16px;overflow:hidden}
+canvas#retChart{width:100%!important;display:block}
+.chart-legend{display:flex;gap:16px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.cl-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-sm)}
+.cl-line{width:18px;height:3px;border-radius:99px}
+.chart-summary{background:var(--teal-lt);border-radius:var(--r-sm);border:1px solid rgba(12,138,123,0.2);padding:12px 14px;margin-top:12px;font-size:13px;color:var(--text-sm);line-height:1.5}
+.chart-summary strong{color:var(--teal)}
+
+/* PROJ */
+.proj-big{text-align:center;padding:20px 0 4px}
+.proj-big .pl{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.proj-big .pv{font-family:'Fraunces',serif;font-weight:800;font-size:2.8rem;color:var(--teal);letter-spacing:-0.04em;line-height:1}
+.proj-big .ps{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* BEHAVIORAL */
+.beh-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px}
+.beh-header{display:flex;align-items:center;padding:16px 18px;gap:12px;cursor:pointer;min-height:60px;-webkit-tap-highlight-color:transparent}
+.beh-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.beh-title-group{flex:1}
+.beh-title{font-weight:700;font-size:0.95rem;color:var(--navy)}
+.beh-status{font-size:11px;margin-top:2px;font-weight:600}
+.beh-status.ok{color:var(--green)}
+.beh-status.caution{color:var(--amber)}
+.beh-status.danger{color:var(--red)}
+.beh-arrow{font-size:18px;color:var(--muted);transition:transform 0.25s;flex-shrink:0}
+.beh-card.open .beh-arrow{transform:rotate(180deg)}
+.beh-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease;border-top:1px solid transparent}
+.beh-card.open .beh-body{max-height:400px;border-top-color:var(--border)}
+.beh-body-inner{padding:16px 18px}
+.beh-body-text{font-size:13px;color:var(--text-sm);line-height:1.6}
+.beh-body-tip{margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:var(--r-sm);font-size:12px;color:var(--text-sm);line-height:1.5;border-left:3px solid var(--teal)}
+.beh-body-tip strong{color:var(--teal)}
+
+/* SCORE */
+.score-widget{background:linear-gradient(135deg,var(--navy),#1a4a7a);border-radius:var(--r);padding:20px;color:#fff;margin-bottom:16px}
+.score-row{display:flex;align-items:center;justify-content:space-between}
+.score-label{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:4px}
+.score-number{font-family:'Fraunces',serif;font-weight:800;font-size:3.2rem;color:#5EEAD4;line-height:1;letter-spacing:-0.04em}
+.score-out-of{font-size:1rem;color:rgba(255,255,255,0.4)}
+.score-ring{width:80px;height:80px;flex-shrink:0}
+.score-ring svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:8}
+.ring-fg{fill:none;stroke:#5EEAD4;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(0.34,1.56,0.64,1)}
+.score-bars{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.score-bar-row{display:flex;align-items:center;gap:10px}
+.score-bar-label{font-size:11px;color:rgba(255,255,255,0.6);width:100px;flex-shrink:0}
+.score-bar-track{flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:99px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:99px;background:#5EEAD4;transition:width 0.8s ease}
+.score-bar-val{font-size:11px;color:rgba(255,255,255,0.6);width:50px;text-align:right;flex-shrink:0}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--surface);border-top:1px solid var(--border);display:flex;box-shadow:0 -4px 20px rgba(15,45,82,0.1);z-index:100}
+.nav-btn{flex:1;padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;border:none;background:none;min-height:56px}
+.nav-btn .nb-icon{font-size:20px;line-height:1}
+.nav-btn .nb-label{font-size:10px;font-weight:600;color:var(--muted);white-space:nowrap}
+.nav-btn.active .nb-label{color:var(--teal)}
+#navIndicator{position:absolute;bottom:0;height:3px;background:var(--teal);border-radius:3px 3px 0 0;transition:left 0.25s cubic-bezier(0.34,1.56,0.64,1),width 0.25s;width:20%}
+
+.section-tag{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.section-title{font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;color:var(--navy);line-height:1.2;margin-bottom:16px}
+
+/* REPORT SECTION */
+.report-header{background:linear-gradient(135deg,var(--navy) 0%,#1a4a7a 100%);border-radius:var(--r);padding:24px 20px;margin-bottom:16px;color:#fff;position:relative;overflow:hidden}
+.report-header::after{content:'';position:absolute;right:-30px;top:-30px;width:160px;height:160px;background:radial-gradient(circle,rgba(94,234,212,0.15) 0%,transparent 70%);border-radius:50%}
+.report-header-tag{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#5EEAD4;margin-bottom:6px}
+.report-header-title{font-family:'Fraunces',serif;font-weight:800;font-size:1.6rem;color:#fff;line-height:1.15;letter-spacing:-0.02em}
+.report-header-date{font-size:11px;color:rgba(255,255,255,0.45);margin-top:6px}
+.report-score-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(94,234,212,0.15);border:1px solid rgba(94,234,212,0.3);border-radius:99px;padding:6px 14px;margin-top:14px}
+.report-score-badge .rsb-num{font-family:'Fraunces',serif;font-weight:800;font-size:1.3rem;color:#5EEAD4;line-height:1}
+.report-score-badge .rsb-label{font-size:11px;color:rgba(255,255,255,0.6);font-weight:600}
+.report-section-head{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin:20px 0 10px;padding-left:4px}
+.report-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}
+.report-row:last-child{border-bottom:none}
+.report-row-label{font-size:13px;color:var(--text-sm)}
+.report-row-value{font-weight:700;font-size:13px;color:var(--navy);text-align:right}
+.report-row-value.green{color:var(--green)}
+.report-row-value.amber{color:var(--amber)}
+.report-row-value.red{color:var(--red)}
+.report-row-value.teal{color:var(--teal)}
+.report-etf-mini{display:flex;gap:6px;flex-wrap:wrap;padding:10px 0}
+.report-etf-tag{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 12px;font-size:12px;font-weight:600;color:var(--navy)}
+.report-etf-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.report-guardrail{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.report-guardrail:last-child{border-bottom:none}
+.report-gr-icon{font-size:16px;flex-shrink:0}
+.report-gr-label{flex:1;font-size:13px;color:var(--text-sm)}
+.report-gr-status{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}
+.report-gr-status.ok{background:var(--green-lt);color:var(--green)}
+.report-gr-status.caution{background:var(--amber-lt);color:var(--amber)}
+.report-gr-status.danger{background:var(--red-lt);color:var(--red)}
+.report-insight{background:var(--teal-lt);border:1px solid rgba(12,138,123,0.2);border-radius:var(--r-sm);padding:14px;margin-bottom:10px;font-size:13px;color:var(--text-sm);line-height:1.55;border-left:3px solid var(--teal)}
+.report-insight strong{color:var(--teal)}
+.btn-generate{width:100%;padding:16px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.2s;margin-bottom:12px;letter-spacing:0.01em}
+.btn-generate:active{background:#0a2240}
+.btn-pdf{width:100%;padding:16px;background:var(--teal);color:#fff;border:none;border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.2s;margin-bottom:16px}
+.btn-pdf:active{background:#097a6c}
+.report-empty{text-align:center;padding:48px 20px;color:var(--muted)}
+.report-empty .re-icon{font-size:48px;margin-bottom:12px}
+.report-empty p{font-size:14px;line-height:1.6}
+#reportOutput{display:none}
+
+/* AFFILIATE CARDS */
+.affiliate-section{margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+.affiliate-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.affiliate-cards{display:flex;flex-direction:column;gap:10px}
+.aff-card{display:flex;align-items:center;gap:14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;text-decoration:none;transition:border-color 0.2s,box-shadow 0.2s;cursor:pointer}
+.aff-card:active{border-color:var(--teal);box-shadow:0 0 0 2px rgba(12,138,123,0.12)}
+.aff-logo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;font-weight:800;font-size:11px;text-align:center;line-height:1.2}
+.aff-info{flex:1;min-width:0}
+.aff-name{font-weight:700;font-size:0.9rem;color:var(--navy)}
+.aff-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.aff-arrow{font-size:18px;color:var(--muted);flex-shrink:0}
+.aff-badge{font-size:10px;font-weight:700;background:var(--green-lt);color:var(--green);border-radius:99px;padding:2px 8px;margin-top:4px;display:inline-block}
+
+/* SAVE TOAST */
+.save-toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;font-size:12px;font-weight:600;padding:8px 18px;border-radius:99px;opacity:0;transition:opacity 0.3s,transform 0.3s;pointer-events:none;z-index:200;white-space:nowrap}
+.save-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* DATA BANNER */
+.data-banner{background:var(--teal-lt);border:1px solid rgba(12,138,123,0.2);border-radius:var(--r-sm);padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--text-sm);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.data-banner-clear{font-size:11px;font-weight:700;color:var(--teal);cursor:pointer;white-space:nowrap;background:none;border:none;padding:0}
+
+@media print {
+  body{background:#fff!important;padding-bottom:0!important}
+  .topbar,.tab-scroll,.bottom-nav,.btn-generate,.btn-pdf,.section-tag{display:none!important}
+  .app{max-width:100%!important}
+  .section{display:none!important}
+  #sec-report{display:block!important}
+  .report-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .report-score-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .inline-warn,.report-insight{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card{box-shadow:none!important;border:1px solid #ddd!important;break-inside:avoid}
+  .report-section-head{margin-top:12px}
+  #reportOutput{display:block!important}
+  .report-empty{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="save-toast" id="saveToast">✓ Progress saved</div>
+
+<div class="topbar">
+  <div class="topbar-logo">Wealth<span>wise</span></div>
+  <div class="topbar-score" id="scoreTopBtn">Score: <span id="topScore">—</span></div>
+</div>
+
+<div class="hero">
+  <div class="hero-label">Monthly Investable</div>
+  <div class="hero-value" id="heroValue">$—</div>
+  <div class="hero-sub" id="heroSub">Enter your income to get started</div>
+  <div class="hero-pills">
+    <div class="hero-pill"><div class="dot" style="background:#5EEAD4"></div><span id="heroPillRate">7% return</span></div>
+    <div class="hero-pill"><div class="dot" style="background:#F59E0B"></div><span id="heroPillAge">Age 25</span></div>
+    <div class="hero-pill"><div class="dot" style="background:#7C3AED"></div><span id="heroPillYears">40 yrs</span></div>
+  </div>
+</div>
+
+
+
+<!-- INCOME -->
+<div class="section active" id="sec-income">
+  <div id="dataBanner" style="display:none" class="data-banner">
+    <span>✅ Your data was restored from your last session.</span>
+    <button class="data-banner-clear" onclick="clearSavedData()">Clear</button>
+  </div>
+  <div class="section-tag">Step 1 of 4</div>
+  <div class="section-title">Income Planning</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon-wrap">💰</div>
+      <div><div class="card-title">Monthly Cash Flow</div><div class="card-sub">After-tax take-home pay</div></div>
+    </div>
+    <div class="field">
+      <div class="field-label">Monthly Income <span class="field-hint">After taxes</span></div>
+      <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="income" placeholder="4,000" inputmode="numeric"/></div>
+      <div id="income-warn"></div>
+    </div>
+    <div class="field">
+      <div class="field-label">Monthly Expenses <span class="field-hint">All bills, rent, food…</span></div>
+      <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="expenses" placeholder="2,800" inputmode="numeric"/></div>
+      <div id="expense-warn"></div>
+    </div>
+  </div>
+  <div class="card" id="incomeResultCard" style="display:none">
+    <div class="card-head">
+      <div class="card-icon-wrap" style="background:#D1FAE5">📈</div>
+      <div><div class="card-title">Your Cash Flow</div><div class="card-sub">Calculated from inputs above</div></div>
+    </div>
+    <div class="stat-grid trio">
+      <div class="stat-box accent"><div class="sl">Investable</div><div class="sv teal" id="r-investable">—</div></div>
+      <div class="stat-box"><div class="sl">Savings Rate</div><div class="sv" id="r-savingsRate">—</div></div>
+      <div class="stat-box"><div class="sl">Annual Savings</div><div class="sv" id="r-annual">—</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ALLOCATION -->
+<div class="section" id="sec-alloc">
+  <div class="section-tag">Step 2 of 4</div>
+  <div class="section-title">ETF Allocation</div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon-wrap">🎯</div>
+      <div><div class="card-title">Age-Based Portfolio</div><div class="card-sub">Rule: 110 − age = stock %</div></div>
+    </div>
+    <div class="slider-field">
+      <div class="slider-val-row">
+        <div>
+          <div class="field-label" style="margin-bottom:2px">Your Age</div>
+          <div class="slider-big"><span id="ageNum">25</span> <span>yrs</span></div>
+        </div>
+        <div style="text-align:right">
+          <div class="field-label" style="margin-bottom:2px">Stocks</div>
+          <div class="slider-big" id="stockAllocDisplay" style="color:var(--teal)">85%</div>
+        </div>
+      </div>
+      <input type="range" id="age" min="16" max="65" value="25"/>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>16</span><span>65</span></div>
+    </div>
+    <div class="alloc-bar-wrap">
+      <div class="alloc-bar">
+        <div class="alloc-seg seg-us" id="segUs" style="width:64%"></div>
+        <div class="alloc-seg seg-intl" id="segIntl" style="width:21%"></div>
+        <div class="alloc-seg seg-bond" id="segBond" style="width:15%"></div>
+      </div>
+      <div class="alloc-legend">
+        <div class="al-item"><div class="al-dot" style="background:#0C8A7B"></div>US Stocks</div>
+        <div class="al-item"><div class="al-dot" style="background:#7C3AED"></div>Intl Stocks</div>
+        <div class="al-item"><div class="al-dot" style="background:#2563EB"></div>Bonds</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon-wrap">🧩</div>
+      <div><div class="card-title">Recommended ETFs</div><div class="card-sub">Low-cost Vanguard index funds</div></div>
+    </div>
+    <div class="etf-row" id="etfRow"></div>
+    <!-- AFFILIATE CARDS -->
+    <div class="affiliate-section">
+      <div class="affiliate-label">Open a brokerage account</div>
+      <div class="affiliate-cards">
+        <a class="aff-card" href="https://join.robinhood.com/alexk-75726064" onclick="affiliateClick(event,'robinhood')" data-broker="robinhood" rel="noopener noreferrer" target="_blank">
+          <div class="aff-logo" style="background:#00C805;color:#fff">🪶</div>
+          <div class="aff-info">
+            <div class="aff-name">Robinhood</div>
+            <div class="aff-desc">Commission-free investing · Easy to start</div>
+            <div class="aff-badge">Get a free stock</div>
+          </div>
+          <div class="aff-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RETIREMENT -->
+<div class="section" id="sec-retire">
+  <div class="section-tag">Step 3 of 4</div>
+  <div class="section-title">Retirement Projection</div>
+  <div class="card">
+    <div class="proj-big">
+      <div class="pl">Projected Balance at 65</div>
+      <div class="pv" id="projBig">$—</div>
+      <div class="ps" id="projBigSub">Enter income and adjust settings</div>
+    </div>
+    <div class="divider"></div>
+    <div class="field" style="margin-bottom:16px">
+      <div class="field-label">Monthly Investment</div>
+      <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="monthlyInvest" placeholder="500" inputmode="numeric"/></div>
+    </div>
+    <div class="field">
+      <div class="field-label" style="margin-bottom:10px">Expected Annual Return</div>
+      <div class="rate-pills" id="ratePills">
+        <div class="rpill" data-rate="0.05"><div class="rpill-pct">5%</div>Conservative</div>
+        <div class="rpill active" data-rate="0.07"><div class="rpill-pct">7%</div>Moderate</div>
+        <div class="rpill" data-rate="0.10"><div class="rpill-pct">10%</div>Optimistic</div>
+      </div>
+    </div>
+    <div class="chart-wrap" id="chartWrap" style="display:none">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Portfolio Growth to Age 65</div>
+      <canvas id="retChart" height="160"></canvas>
+      <div class="chart-legend">
+        <div class="cl-item"><div class="cl-line" style="background:#0C8A7B"></div>Portfolio Value</div>
+        <div class="cl-item"><div class="cl-line" style="background:#2563EB;opacity:0.5"></div>Contributions Only</div>
+      </div>
+    </div>
+    <div class="chart-summary" id="chartSummary" style="display:none">📌 <span id="summaryText"></span></div>
+    <div class="stat-grid" style="margin-top:16px">
+      <div class="stat-box"><div class="sl">Total Contributed</div><div class="sv" id="r-contrib" style="font-size:1.1rem">—</div></div>
+      <div class="stat-box"><div class="sl">Investment Growth</div><div class="sv green" id="r-growth" style="font-size:1.1rem">—</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BEHAVIOR -->
+<div class="section" id="sec-behavior">
+  <div class="section-tag">Step 4 of 4</div>
+  <div class="section-title">Behavioral Guardrails</div>
+  <div class="score-widget">
+    <div class="score-row">
+      <div>
+        <div class="score-label">Financial Health Score</div>
+        <div><span class="score-number" id="scoreNum">—</span><span class="score-out-of"> /100</span></div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px" id="scoreLabel">Add your income to calculate</div>
+      </div>
+      <div class="score-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="32"/>
+          <circle class="ring-fg" id="scoreRing" cx="40" cy="40" r="32" stroke-dasharray="201" stroke-dashoffset="201"/>
+        </svg>
+      </div>
+    </div>
+    <div class="score-bars">
+      <div class="score-bar-row"><div class="score-bar-label">Savings Rate</div><div class="score-bar-track"><div class="score-bar-fill" id="sb-savings" style="width:0%"></div></div><div class="score-bar-val" id="sv-savings">—</div></div>
+      <div class="score-bar-row"><div class="score-bar-label">Spending Control</div><div class="score-bar-track"><div class="score-bar-fill" id="sb-spend" style="width:0%"></div></div><div class="score-bar-val" id="sv-spend">—</div></div>
+      <div class="score-bar-row"><div class="score-bar-label">Invest Monthly</div><div class="score-bar-track"><div class="score-bar-fill" id="sb-invest" style="width:0%"></div></div><div class="score-bar-val" id="sv-invest">—</div></div>
+      <div class="score-bar-row"><div class="score-bar-label">Time Advantage</div><div class="score-bar-track"><div class="score-bar-fill" id="sb-time" style="width:0%"></div></div><div class="score-bar-val" id="sv-time">—</div></div>
+    </div>
+  </div>
+  <div id="guardrailCards"></div>
+</div>
+
+<!-- REPORT -->
+<div class="section" id="sec-report">
+  <div class="section-tag">Summary</div>
+  <div class="section-title">Financial Report</div>
+  <button class="btn-generate" onclick="generateReport()">✨ Generate My Report</button>
+  <div id="reportOutput">
+    <div class="report-header">
+      <div class="report-header-tag">WealthWise Financial Summary</div>
+      <div class="report-header-title" id="rpt-title">Your Financial Plan</div>
+      <div class="report-header-date" id="rpt-date"></div>
+      <div class="report-score-badge">
+        <div class="rsb-num" id="rpt-score">—</div>
+        <div class="rsb-label">Financial Health Score</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="report-section-head">💰 Cash Flow</div>
+      <div class="report-row"><span class="report-row-label">Monthly Income</span><span class="report-row-value" id="rpt-income">—</span></div>
+      <div class="report-row"><span class="report-row-label">Monthly Expenses</span><span class="report-row-value" id="rpt-expenses">—</span></div>
+      <div class="report-row"><span class="report-row-label">Monthly Investable</span><span class="report-row-value teal" id="rpt-investable">—</span></div>
+      <div class="report-row"><span class="report-row-label">Savings Rate</span><span class="report-row-value" id="rpt-savings-rate">—</span></div>
+      <div class="report-row"><span class="report-row-label">Annual Savings Potential</span><span class="report-row-value" id="rpt-annual">—</span></div>
+    </div>
+
+    <div class="card">
+      <div class="report-section-head">📊 Portfolio Allocation</div>
+      <div class="report-row"><span class="report-row-label">Your Age</span><span class="report-row-value" id="rpt-age">—</span></div>
+      <div class="report-row"><span class="report-row-label">Stock Allocation</span><span class="report-row-value teal" id="rpt-stocks">—</span></div>
+      <div class="report-row"><span class="report-row-label">Bond Allocation</span><span class="report-row-value" id="rpt-bonds">—</span></div>
+      <div class="report-section-head" style="margin-top:14px">Recommended ETFs</div>
+      <div class="report-etf-mini" id="rpt-etfs"></div>
+    </div>
+
+    <div class="card">
+      <div class="report-section-head">🏔 Retirement Projection</div>
+      <div class="report-row"><span class="report-row-label">Monthly Investment</span><span class="report-row-value" id="rpt-monthly">—</span></div>
+      <div class="report-row"><span class="report-row-label">Expected Return</span><span class="report-row-value" id="rpt-rate">—</span></div>
+      <div class="report-row"><span class="report-row-label">Years to Retirement</span><span class="report-row-value" id="rpt-years">—</span></div>
+      <div class="report-row"><span class="report-row-label">Total Contributions</span><span class="report-row-value" id="rpt-contrib">—</span></div>
+      <div class="report-row"><span class="report-row-label">Investment Growth</span><span class="report-row-value green" id="rpt-growth">—</span></div>
+      <div class="report-row"><span class="report-row-label">Projected Balance at 65</span><span class="report-row-value teal" id="rpt-fv" style="font-size:1.1rem">—</span></div>
+    </div>
+
+    <div class="card">
+      <div class="report-section-head">🛡 Behavioral Guardrails</div>
+      <div id="rpt-guardrails"></div>
+    </div>
+
+    <div class="card">
+      <div class="report-section-head">💡 Key Insights</div>
+      <div id="rpt-insights"></div>
+    </div>
+
+    <button class="btn-pdf" onclick="window.print()">⬇ Download as PDF</button>
+  </div>
+
+  <div id="reportEmpty" class="report-empty">
+    <div class="re-icon">📋</div>
+    <p>Click <strong>Generate My Report</strong> above to compile your full financial summary.<br><br>Make sure you've filled in your income details first.</p>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <div id="navIndicator"></div>
+  <button class="nav-btn active" data-nav="income"><div class="nb-icon">💰</div><div class="nb-label">Income</div></button>
+  <button class="nav-btn" data-nav="alloc"><div class="nb-icon">📊</div><div class="nb-label">Allocate</div></button>
+  <button class="nav-btn" data-nav="retire"><div class="nb-icon">🏔</div><div class="nb-label">Retire</div></button>
+  <button class="nav-btn" data-nav="behavior"><div class="nb-icon">🛡</div><div class="nb-label">Score</div></button>
+  <button class="nav-btn" data-nav="report"><div class="nb-icon">📄</div><div class="nb-label">Report</div></button>
+</div>
+
+</div>
+<script>
+// ─── AFFILIATE MODULE ───────────────────────────────────────────────────────
+// HOW IT WORKS:
+//   Each broker has a real affiliate URL (fill in your actual affiliate IDs below).
+//   When a user clicks, we:
+//     1. Record the click in localStorage (broker, timestamp, page, userAge, income bracket)
+//     2. Open the affiliate URL in a new tab — the broker tracks conversions via their cookie.
+//   You can read AFFILIATE.getClicks() from your analytics dashboard or a future backend sync.
+//
+// TO GET YOUR AFFILIATE ID:
+//   Robinhood referral program: robinhood.com/us/en/support/articles/referral-program/
+
+const AFFILIATE = {
+  links: {
+    robinhood: 'https://join.robinhood.com/alexk-75726064',
+  },
+
+  // Record a click event into localStorage for your records
+  trackClick(broker, meta = {}) {
+    const key = 'ww_affiliate_clicks';
+    let clicks = [];
+    try { clicks = JSON.parse(localStorage.getItem(key)) || []; } catch(e){}
+    clicks.push({
+      broker,
+      ts: new Date().toISOString(),
+      age: meta.age || null,
+      incomeBracket: meta.incomeBracket || null,
+      page: meta.page || 'unknown',
+    });
+    localStorage.setItem(key, JSON.stringify(clicks));
+  },
+
+  // Read all recorded clicks — useful for syncing to a backend later
+  getClicks() {
+    try { return JSON.parse(localStorage.getItem('ww_affiliate_clicks')) || []; }
+    catch(e){ return []; }
+  },
+
+  // Clear click log (call from admin/debug)
+  clearClicks() { localStorage.removeItem('ww_affiliate_clicks'); },
+};
+
+// Called from onclick on each affiliate card
+function affiliateClick(e, broker) {
+  e.preventDefault();
+  const incomeBracket = S.income < 3000 ? '<3k' : S.income < 6000 ? '3-6k' : '6k+';
+  AFFILIATE.trackClick(broker, { age: S.age, incomeBracket, page: 'allocation' });
+  const url = AFFILIATE.links[broker];
+  if (url) {
+    window.open(url, '_blank', 'noopener noreferrer');
+  } else {
+    // Dev mode: no real link yet — just log it
+    console.log(`[Affiliate] Click recorded for ${broker}. Replace URL in AFFILIATE.links.`);
+    alert(`Affiliate click for ${broker} recorded!\n\nReplace the placeholder URL in AFFILIATE.links.${broker} with your real affiliate link.`);
+  }
+}
+
+// ─── LOCALSTORAGE PERSISTENCE MODULE ────────────────────────────────────────
+// HOW IT WORKS:
+//   Every time the user changes a field, saveState() is called.
+//   On next load, loadState() restores all inputs and re-runs the UI.
+//   The data lives only on this device/browser. No server involved.
+//
+// EXPANDING TO A BACKEND LATER:
+//   Replace the localStorage.setItem/getItem calls with fetch() to your API.
+//   The shape of the data object stays exactly the same — just the transport changes.
+
+const STORAGE = {
+  KEY: 'ww_user_state_v1',  // version suffix lets you safely reset if schema changes
+
+  save(state, monthlyInputVal, rateVal) {
+    try {
+      const data = {
+        income: state.income,
+        expenses: state.expenses,
+        age: state.age,
+        rate: rateVal,           // save the selected rate pill value
+        monthly: state.monthly,
+        monthlyManual: $('monthlyInvest')._manual || false,
+        monthlyInputVal: monthlyInputVal,
+        savedAt: Date.now(),
+      };
+      localStorage.setItem(this.KEY, JSON.stringify(data));
+    } catch(e) { console.warn('Save failed:', e); }
+  },
+
+  load() {
+    try {
+      const raw = localStorage.getItem(this.KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch(e) { return null; }
+  },
+
+  clear() {
+    localStorage.removeItem(this.KEY);
+  },
+};
+
+let _saveTimer = null;
+function saveState() {
+  // Debounce: wait 600ms after last change before writing — avoids write spam on sliders
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => {
+    STORAGE.save(S, $('monthlyInvest').value, S.rate);
+    showSaveToast();
+  }, 600);
+}
+
+function showSaveToast() {
+  const t = $('saveToast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function clearSavedData() {
+  STORAGE.clear();
+  $('dataBanner').style.display = 'none';
+  showSaveToast();
+  $('saveToast').textContent = '🗑 Data cleared';
+  setTimeout(() => { $('saveToast').textContent = '✓ Progress saved'; }, 2500);
+}
+
+function loadSavedState() {
+  const d = STORAGE.load();
+  if (!d) return false;
+
+  // Restore state object
+  S.income   = d.income   || 0;
+  S.expenses = d.expenses || 0;
+  S.age      = d.age      || 25;
+  S.rate     = d.rate     || 0.07;
+  S.monthly  = d.monthly  || 0;
+
+  // Restore income/expenses inputs
+  if (S.income)   $('income').value   = S.income;
+  if (S.expenses) $('expenses').value = S.expenses;
+
+  // Restore age slider
+  $('age').value        = S.age;
+  $('ageNum').textContent = S.age;
+
+  // Restore monthly investment input
+  if (d.monthlyInputVal) {
+    $('monthlyInvest').value  = d.monthlyInputVal;
+    $('monthlyInvest')._manual = d.monthlyManual;
+  }
+
+  // Restore the active rate pill
+  document.querySelectorAll('.rpill').forEach(p => {
+    const active = parseFloat(p.dataset.rate) === S.rate;
+    p.classList.toggle('active', active);
+  });
+
+  // Show the "restored" banner
+  $('dataBanner').style.display = 'flex';
+  return true;
+}
+
+const S={income:0,expenses:0,age:25,rate:0.07,monthly:0};
+const fmt=n=>n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e3?'$'+Math.round(n).toLocaleString():'$'+Math.round(n);
+const pct=n=>+(Math.round(n*100)/100).toFixed(2)+'%';
+const $=id=>document.getElementById(id);
+const warn=(type,icon,msg)=>`<div class="inline-warn ${type}"><span class="wi">${icon}</span><span class="wt">${msg}</span></div>`;
+
+// NAV
+function switchTab(key){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.nav===key));
+  ['income','alloc','retire','behavior','report'].forEach(k=>$('sec-'+k).classList.toggle('active',k===key));
+  const idx=['income','alloc','retire','behavior','report'].indexOf(key);
+  $('navIndicator').style.left=(idx*20)+'%';
+  $('navIndicator').style.width='20%';
+  if(key==='retire'){const m=parseFloat($('monthlyInvest').value)||S.monthly||0;if(m>0)updateProjection();}
+}
+document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.nav)));
+
+// INCOME
+function updateIncome(){
+  S.income=parseFloat($('income').value)||0;
+  S.expenses=parseFloat($('expenses').value)||0;
+  const inv=Math.max(0,S.income-S.expenses);
+  const rate=S.income>0?(inv/S.income)*100:0;
+  const spPct=S.income>0?(S.expenses/S.income)*100:0;
+  const ew=$('expense-warn');
+  if(S.income>0&&S.expenses>0){
+    if(spPct>90) ew.innerHTML=warn('danger','🚨',`<strong>Spending ${pct(spPct)} of income.</strong> Almost nothing left to invest. Review your biggest expenses.`);
+    else if(spPct>75) ew.innerHTML=warn('caution','⚠️',`<strong>Spending ${pct(spPct)} of income.</strong> Try the 50/30/20 rule: needs/wants/savings.`);
+    else ew.innerHTML=warn('ok','✅',`<strong>Spending ${pct(spPct)} of income.</strong> Good control — plenty of room to invest.`);
+  } else { ew.innerHTML=''; }
+  if(S.income>0){
+    $('incomeResultCard').style.display='block';
+    $('r-investable').textContent=fmt(inv);
+    const srEl=$('r-savingsRate');
+    srEl.textContent=pct(rate);
+    srEl.className='sv '+(rate>=20?'green':rate>=10?'amber':'red');
+    $('r-annual').textContent=fmt(inv*12);
+  } else { $('incomeResultCard').style.display='none'; }
+  $('heroValue').textContent=S.income>0?fmt(inv):'$—';
+  $('heroSub').textContent=S.income>0?`${pct(rate)} savings rate · ${fmt(inv*12)}/year to invest`:'Enter your income to get started';
+  if(inv>0&&!$('monthlyInvest')._manual){$('monthlyInvest').value=Math.round(inv);S.monthly=inv;}
+  updateProjection();updateScore();
+}
+
+// ALLOCATION
+function updateAlloc(){
+  const age=S.age;
+  const st=Math.min(90,Math.max(50,110-age));
+  const bond=100-st;
+  const us=Math.round(st*0.75);
+  const intl=st-us;
+  $('segUs').style.width=us+'%';
+  $('segIntl').style.width=intl+'%';
+  $('segBond').style.width=bond+'%';
+  $('stockAllocDisplay').textContent=st+'%';
+  $('heroPillAge').textContent='Age '+age;
+  $('heroPillYears').textContent=(65-age)+' yrs';
+  const etfs=[
+    {ticker:'VTI',name:'Vanguard Total Stock Market',desc:'~3900 US companies',pct:us,color:'#0C8A7B'},
+    {ticker:'VXUS',name:'Vanguard Total Intl Stock',desc:'Global diversification',pct:intl,color:'#7C3AED'},
+    {ticker:'BND',name:'Vanguard Total Bond Market',desc:'Stability & income buffer',pct:bond,color:'#2563EB'},
+  ];
+  $('etfRow').innerHTML=etfs.map(e=>`<div class="etf-item"><div class="etf-color-bar" style="background:${e.color}"></div><div class="etf-info"><div class="etf-ticker">${e.ticker}</div><div class="etf-name">${e.name}</div><div class="etf-desc">${e.desc}</div></div><div class="etf-pct">${e.pct}%</div></div>`).join('');
+  updateProjection();updateScore();
+}
+
+// PROJECTION
+function updateProjection(){
+  const m=parseFloat($('monthlyInvest').value)||S.monthly||0;
+  const yrs=Math.max(0,65-S.age);
+  const mos=yrs*12;
+  const rM=S.rate/12;
+  $('heroPillRate').textContent=pct(S.rate*100)+' return';
+  if(m<=0||mos<=0)return;
+  const fv=rM===0?m*mos:m*((Math.pow(1+rM,mos)-1)/rM);
+  const contrib=m*mos;
+  const growth=fv-contrib;
+  $('projBig').textContent=fmt(fv);
+  $('projBigSub').textContent=`Over ${yrs} yrs at ${pct(S.rate*100)} annual return`;
+  $('r-contrib').textContent=fmt(contrib);
+  $('r-growth').textContent='+'+fmt(growth);
+  $('chartWrap').style.display='block';
+  $('chartSummary').style.display='block';
+  $('summaryText').innerHTML=`Your <strong>${fmt(m)}/month</strong> grows to <strong>${fmt(fv)}</strong> by age 65. <strong>${fmt(growth)}</strong> is pure compound growth — money working for you.`;
+  drawChart(S.age,m,S.rate,yrs);
+}
+
+function drawChart(age,monthly,rate,years){
+  const canvas=$('retChart');
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.parentElement.offsetWidth-16;
+  canvas.width=W*dpr;canvas.height=160*dpr;
+  canvas.style.width=W+'px';canvas.style.height='160px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const pad={top:20,right:12,bottom:24,left:52};
+  const iW=W-pad.left-pad.right,iH=160-pad.top-pad.bottom;
+  const rM=rate/12;
+  const pts=[];
+  for(let y=0;y<=years;y++){const m=y*12;const fv=rM===0?monthly*m:monthly*((Math.pow(1+rM,m)-1)/rM);pts.push({age:age+y,fv,contrib:monthly*m});}
+  const maxV=pts[pts.length-1].fv;
+  const xOf=i=>pad.left+(i/(pts.length-1))*iW;
+  const yOf=v=>pad.top+iH*(1-v/maxV);
+  function draw(){
+    ctx.clearRect(0,0,W,160);
+    ctx.strokeStyle='rgba(100,116,139,0.12)';ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){const y=pad.top+iH*i/4;ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(pad.left+iW,y);ctx.stroke();const v=maxV*(1-i/4);ctx.fillStyle='#94A3B8';ctx.font='10px sans-serif';ctx.textAlign='right';ctx.fillText(v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?Math.round(v/1e3)+'k':Math.round(v),pad.left-6,y+4);}
+    ctx.beginPath();pts.forEach((p,i)=>{i===0?ctx.moveTo(xOf(i),yOf(p.contrib)):ctx.lineTo(xOf(i),yOf(p.contrib));});ctx.lineTo(xOf(pts.length-1),pad.top+iH);ctx.lineTo(pad.left,pad.top+iH);ctx.closePath();ctx.fillStyle='rgba(37,99,235,0.12)';ctx.fill();
+    const g=ctx.createLinearGradient(0,pad.top,0,pad.top+iH);g.addColorStop(0,'rgba(12,138,123,0.25)');g.addColorStop(1,'rgba(12,138,123,0.02)');
+    ctx.beginPath();pts.forEach((p,i)=>{i===0?ctx.moveTo(xOf(i),yOf(p.fv)):ctx.lineTo(xOf(i),yOf(p.fv));});ctx.lineTo(xOf(pts.length-1),pad.top+iH);ctx.lineTo(pad.left,pad.top+iH);ctx.closePath();ctx.fillStyle=g;ctx.fill();
+    ctx.beginPath();pts.forEach((p,i)=>{i===0?ctx.moveTo(xOf(i),yOf(p.fv)):ctx.lineTo(xOf(i),yOf(p.fv));});ctx.strokeStyle='#0C8A7B';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.stroke();
+    ctx.fillStyle='#94A3B8';ctx.font='10px sans-serif';ctx.textAlign='center';
+    const step=Math.ceil(years/4);pts.forEach((p,i)=>{if(i%step===0||i===pts.length-1)ctx.fillText('Age '+p.age,xOf(i),160-6);});
+  }
+  draw();
+  canvas.ontouchstart=canvas.onmousemove=function(e){
+    const rect=canvas.getBoundingClientRect();
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const rx=(cx-rect.left)/rect.width*W;
+    const idx=Math.max(0,Math.min(pts.length-1,Math.round((rx-pad.left)/iW*(pts.length-1))));
+    const p=pts[idx];
+    draw();
+    ctx.beginPath();ctx.arc(xOf(idx),yOf(p.fv),5,0,Math.PI*2);ctx.fillStyle='#0C8A7B';ctx.fill();
+    ctx.beginPath();ctx.arc(xOf(idx),yOf(p.fv),9,0,Math.PI*2);ctx.strokeStyle='rgba(12,138,123,0.3)';ctx.lineWidth=2;ctx.stroke();
+    const tx=Math.min(Math.max(xOf(idx),55),W-55);const ty=Math.max(yOf(p.fv)-14,20);
+    ctx.fillStyle='#0F2D52';
+    if(ctx.roundRect){ctx.beginPath();ctx.roundRect(tx-52,ty-24,104,22,6);ctx.fill();}
+    else{ctx.fillRect(tx-52,ty-24,104,22);}
+    ctx.fillStyle='#fff';ctx.font='bold 10px sans-serif';ctx.textAlign='center';
+    ctx.fillText('Age '+p.age+': '+fmt(p.fv),tx,ty-9);
+  };
+}
+
+// SCORE
+function updateScore(){
+  const inc=S.income,exp=S.expenses;
+  if(inc<=0)return;
+  const inv=Math.max(0,inc-exp);
+  const savR=(inv/inc)*100;
+  const spR=(exp/inc)*100;
+  const monthly=parseFloat($('monthlyInvest').value)||inv;
+  const s1=Math.min(25,savR>=20?25:savR>=10?15:savR>=5?8:3);
+  const s2=Math.min(25,spR<60?25:spR<75?18:spR<85?10:4);
+  const s3=Math.min(25,monthly>=500?25:monthly>=200?18:monthly>=50?10:3);
+  const s4=Math.min(25,S.age<=22?25:S.age<=26?22:S.age<=30?17:12);
+  const total=Math.round(s1+s2+s3+s4);
+  $('scoreNum').textContent=total;
+  $('topScore').textContent=total;
+  const labels=['Getting started','Building habits','On track','Great progress','Excellent!'];
+  $('scoreLabel').textContent=labels[Math.min(4,Math.floor(total/25))];
+  $('scoreRing').style.strokeDashoffset=201-(total/100)*201;
+  [['sb-savings','sv-savings',s1,25,pct(savR)],['sb-spend','sv-spend',s2,25,pct(Math.round(100-spR))],['sb-invest','sv-invest',s3,25,fmt(monthly)+'/mo'],['sb-time','sv-time',s4,25,(65-S.age)+'yr']].forEach(([sid,vid,val,max,lbl])=>{$(sid).style.width=(val/max*100)+'%';$(vid).textContent=lbl;});
+  renderGuardrails(savR,spR,monthly);
+}
+
+function renderGuardrails(savR,spR,monthly){
+  const fvCalc=m=>m*((Math.pow(1+0.07/12,(65-S.age)*12)-1)/(0.07/12));
+  const rules=[
+    {icon:'💸',title:'Savings Rate',status:savR>=20?'ok':savR>=10?'caution':'danger',statusText:savR>=20?`On target (${pct(savR)})`:savR>=10?`Needs improvement (${pct(savR)})`:`Below minimum (${pct(savR)})`,body:savR>=20?`Your ${pct(savR)} savings rate puts you ahead of 80% of people your age. Keep this consistent.`:`Aim for 20%+ savings. That's an extra ${fmt(Math.max(0,S.income*0.2-Math.max(0,S.income-S.expenses)))}/month needed.`,tip:savR>=20?`<strong>Pro move:</strong> Automate savings on payday so it happens without thinking.`:`<strong>Quick win:</strong> Find one $20+/month subscription you forgot about and cancel it.`},
+    {icon:'🏠',title:'Spending Control',status:spR<70?'ok':spR<85?'caution':'danger',statusText:spR<70?`Healthy (${pct(spR)} of income)`:spR<85?`Getting tight (${pct(spR)})`:`High risk (${pct(spR)})`,body:`At ${pct(spR)} spending, you have ${spR<70?'a solid buffer for emergencies and investing':'limited room for unexpected costs'}. One emergency could force you into debt.`,tip:`<strong>50/30/20 rule:</strong> 50% needs · 30% wants · 20% savings. Even approximating this builds wealth.`},
+    {icon:'📅',title:'Investing Consistency',status:monthly>=200?'ok':monthly>=50?'caution':'danger',statusText:monthly>=200?`${fmt(monthly)}/month — great`:monthly>=50?`${fmt(monthly)}/month — keep building`:`Under $50/month`,body:`${fmt(monthly)}/month at 7% for ${65-S.age} years = ${fmt(fvCalc(monthly))}. Missing even 6 months costs you thousands.`,tip:`<strong>Automate it:</strong> Set a recurring transfer on the 1st of each month. Consistency beats timing.`},
+    {icon:'⏳',title:'Time Advantage',status:S.age<=25?'ok':S.age<=30?'caution':'danger',statusText:S.age<=25?'Prime compounding window':'Every year counts now',body:`At ${S.age}, you have ${65-S.age} years of compounding ahead. $1 invested today = ${fmt(Math.pow(1.07,65-S.age))} at age 65. Waiting 5 more years reduces your final balance by ~30%.`,tip:`<strong>Rule of 72:</strong> At 7% return, your money doubles every ~10 years. Start now.`},
+  ];
+  $('guardrailCards').innerHTML=rules.map((r,i)=>{
+    const ic={ok:'#D1FAE5',caution:'#FEF3C7',danger:'#FEE2E2'};
+    return `<div class="beh-card" id="bc-${i}"><div class="beh-header" onclick="toggleBeh(${i})"><div class="beh-icon" style="background:${ic[r.status]}">${r.icon}</div><div class="beh-title-group"><div class="beh-title">${r.title}</div><div class="beh-status ${r.status}">${r.statusText}</div></div><div class="beh-arrow">⌄</div></div><div class="beh-body"><div class="beh-body-inner"><div class="beh-body-text">${r.body}</div><div class="beh-body-tip">${r.tip}</div></div></div></div>`;
+  }).join('');
+}
+function toggleBeh(i){$('bc-'+i).classList.toggle('open');}
+
+// REPORT
+const scoreLabels=['Getting started','Building habits','On track','Great progress','Excellent!'];
+const grTitles=['Savings Rate','Spending Control','Investing Consistency','Time Advantage'];
+
+function getReportData(){
+  const inc=S.income,exp=S.expenses,inv=Math.max(0,inc-exp);
+  const savR=inc>0?(inv/inc)*100:0;
+  const spR=inc>0?(exp/inc)*100:0;
+  const monthly=parseFloat($('monthlyInvest').value)||S.monthly||0;
+  const yrs=Math.max(0,65-S.age);
+  const mos=yrs*12;
+  const rM=S.rate/12;
+  const fv=rM===0?monthly*mos:monthly*((Math.pow(1+rM,mos)-1)/rM);
+  const contrib=monthly*mos;
+  const growth=fv-contrib;
+  const age=S.age;
+  const st=Math.min(90,Math.max(50,110-age));
+  const bond=100-st;
+  const us=Math.round(st*0.75);
+  const intl=st-us;
+  const scoreNum=parseInt($('scoreNum').textContent)||0;
+  const scoreLabel=scoreNum>0?scoreLabels[Math.min(4,Math.floor(scoreNum/25))]:'—';
+  // guardrail statuses
+  const guardrails=[
+    {name:'Savings Rate',status:savR>=20?'ok':savR>=10?'caution':'danger',text:savR>=20?'On target ('+pct(savR)+')':savR>=10?'Needs improvement':'Below minimum'},
+    {name:'Spending Control',status:spR<70?'ok':spR<85?'caution':'danger',text:spR<70?'Healthy ('+pct(spR)+')':spR<85?'Getting tight':'High risk'},
+    {name:'Investing Monthly',status:monthly>=200?'ok':monthly>=50?'caution':'danger',text:monthly>=200?fmt(monthly)+'/mo — great':monthly>=50?fmt(monthly)+'/mo — keep building':'Under $50/mo'},
+    {name:'Time Advantage',status:age<=25?'ok':age<=30?'caution':'danger',text:age<=25?'Prime window ('+yrs+' yrs)':'Every year counts ('+yrs+' yrs)'},
+  ];
+  return {inc,exp,inv,savR,spR,monthly,yrs,fv,contrib,growth,us,intl,bond,scoreNum,scoreLabel,guardrails};
+}
+
+function buildReport(){
+  const d=getReportData();
+  $('reportDate').textContent='Generated '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  if(d.inc<=0){
+    $('reportBody').innerHTML=`<div class="report-empty"><div class="report-empty-icon">📊</div><div>Your report will appear here once you fill in your financial details.</div><div class="report-empty-hint">💡 Start by entering your income on the <strong>Income</strong> tab, then explore each section to build a complete picture.</div></div>`;
+    return;
+  }
+  const savColor=d.savR>=20?'green':d.savR>=10?'amber':'red';
+  const spColor=d.spR<70?'green':d.spR<85?'amber':'red';
+  const scoreColor=d.scoreNum>=75?'green':d.scoreNum>=50?'amber':'red';
+  $('reportBody').innerHTML=`
+    <div class="report-section">
+      <div class="report-section-title">💰 Cash Flow</div>
+      <div class="report-row"><div class="report-row-label">Monthly Income</div><div class="report-row-value">${fmt(d.inc)}</div></div>
+      <div class="report-row"><div class="report-row-label">Monthly Expenses</div><div class="report-row-value">${fmt(d.exp)}</div></div>
+      <div class="report-row"><div class="report-row-label">Monthly Investable</div><div class="report-row-value teal">${fmt(d.inv)}</div></div>
+      <div class="report-row"><div class="report-row-label">Savings Rate</div><div class="report-row-value ${savColor}">${pct(d.savR)}</div></div>
+      <div class="report-row"><div class="report-row-label">Spending Rate</div><div class="report-row-value ${spColor}">${pct(d.spR)}</div></div>
+      <div class="report-row"><div class="report-row-label">Annual Savings</div><div class="report-row-value">${fmt(d.inv*12)}</div></div>
+    </div>
+    <div class="report-section">
+      <div class="report-section-title">📊 ETF Allocation (Age ${S.age})</div>
+      <div class="report-row"><div class="report-row-label">VTI — US Stocks</div><div class="report-row-value teal">${d.us}%</div></div>
+      <div class="report-row"><div class="report-row-label">VXUS — Intl Stocks</div><div class="report-row-value" style="color:#7C3AED">${d.intl}%</div></div>
+      <div class="report-row"><div class="report-row-label">BND — Bonds</div><div class="report-row-value" style="color:#2563EB">${d.bond}%</div></div>
+      <div class="report-row"><div class="report-row-label">Total Equity</div><div class="report-row-value">${d.us+d.intl}%</div></div>
+    </div>
+    <div class="report-section">
+      <div class="report-section-title">🏔 Retirement Projection</div>
+      <div class="report-row"><div class="report-row-label">Monthly Investment</div><div class="report-row-value">${fmt(d.monthly)}</div></div>
+      <div class="report-row"><div class="report-row-label">Expected Return</div><div class="report-row-value">${pct(S.rate*100)}/yr</div></div>
+      <div class="report-row"><div class="report-row-label">Years to Retire</div><div class="report-row-value">${d.yrs} yrs</div></div>
+      <div class="report-row"><div class="report-row-label">Total Contributed</div><div class="report-row-value">${fmt(d.contrib)}</div></div>
+      <div class="report-row"><div class="report-row-label">Investment Growth</div><div class="report-row-value green">+${fmt(d.growth)}</div></div>
+      <div class="report-row"><div class="report-row-label">Projected Balance</div><div class="report-row-value teal" style="font-size:1.05rem">${fmt(d.fv)}</div></div>
+    </div>
+    <div class="report-section">
+      <div class="report-section-title">🛡 Financial Health Score</div>
+      <div class="report-score-badge">
+        <div class="report-score-num ${scoreColor}" style="color:${d.scoreNum>=75?'var(--green)':d.scoreNum>=50?'var(--amber)':'var(--red)'}">${d.scoreNum}<span style="font-size:1rem;color:var(--muted);font-weight:400">/100</span></div>
+        <div><div style="font-weight:700;font-size:14px;color:var(--navy)">${d.scoreLabel}</div><div class="report-score-label">Overall financial health</div></div>
+      </div>
+      <div class="report-guardrail-list">
+        ${d.guardrails.map(g=>`<div class="report-gr-item"><div class="report-gr-dot ${g.status}"></div><div class="report-gr-name">${g.name}</div><div class="report-gr-status ${g.status}">${g.text}</div></div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function generatePDF(){
+  const d=getReportData();
+  if(d.inc<=0){alert('Please enter your income first to generate a report.');return;}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const W=210,pad=18;
+  let y=0;
+
+  // Header bg
+  doc.setFillColor(15,45,82);
+  doc.rect(0,0,W,42,'F');
+  // Accent circle
+  doc.setFillColor(94,234,212,0.1);
+  doc.circle(185,8,25,'F');
+
+  // Logo
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(20);
+  doc.setTextColor(255,255,255);
+  doc.text('Wealth',pad,18);
+  doc.setTextColor(94,234,212);
+  doc.text('wise',pad+28,18);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.setTextColor(180,200,220);
+  doc.text('Personal Finance Summary Report',pad,26);
+  doc.text('Generated '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),pad,33);
+
+  y=52;
+
+  function sectionHeader(title){
+    doc.setFillColor(230,244,242);
+    doc.roundedRect(pad,y-4,W-pad*2,8,2,2,'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(12,138,123);
+    doc.text(title.toUpperCase(),pad+3,y+1);
+    y+=10;
+  }
+
+  function row(label,value,vColor){
+    if(y>270){doc.addPage();y=20;}
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.setTextColor(70,85,105);
+    doc.text(label,pad+2,y);
+    doc.setFont('helvetica','bold');
+    if(vColor==='green') doc.setTextColor(5,150,105);
+    else if(vColor==='red') doc.setTextColor(220,38,38);
+    else if(vColor==='amber') doc.setTextColor(180,100,6);
+    else if(vColor==='teal') doc.setTextColor(12,138,123);
+    else doc.setTextColor(15,45,82);
+    doc.text(value,W-pad-2,y,{align:'right'});
+    doc.setDrawColor(226,232,240);
+    doc.setLineWidth(0.3);
+    doc.line(pad,y+2,W-pad,y+2);
+    y+=9;
+  }
+
+  // CASH FLOW
+  sectionHeader('💰 Cash Flow');
+  row('Monthly Income',fmt(d.inc));
+  row('Monthly Expenses',fmt(d.exp));
+  row('Monthly Investable',fmt(d.inv),'teal');
+  row('Savings Rate',pct(d.savR),d.savR>=20?'green':d.savR>=10?'amber':'red');
+  row('Spending Rate',pct(d.spR),d.spR<70?'green':d.spR<85?'amber':'red');
+  row('Annual Savings',fmt(d.inv*12));
+  y+=4;
+
+  // ALLOCATION
+  sectionHeader('📊 ETF Allocation (Age '+S.age+')');
+  row('VTI — US Stocks',d.us+'%','teal');
+  row('VXUS — Intl Stocks',d.intl+'%');
+  row('BND — Bonds',d.bond+'%');
+  row('Total Equity',(d.us+d.intl)+'%');
+  y+=4;
+
+  // RETIREMENT
+  sectionHeader('🏔 Retirement Projection');
+  row('Monthly Investment',fmt(d.monthly));
+  row('Expected Return',pct(S.rate*100)+'/yr');
+  row('Years to Retirement',d.yrs+' yrs');
+  row('Total Contributed',fmt(d.contrib));
+  row('Investment Growth','+'+fmt(d.growth),'green');
+  // Big projected value
+  y+=2;
+  doc.setFillColor(15,45,82);
+  doc.roundedRect(pad,y,W-pad*2,18,3,3,'F');
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  doc.setTextColor(94,234,212);
+  doc.text('PROJECTED BALANCE AT 65',pad+4,y+6);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(16);
+  doc.setTextColor(255,255,255);
+  doc.text(fmt(d.fv),W-pad-4,y+13,{align:'right'});
+  y+=26;
+
+  // HEALTH SCORE
+  sectionHeader('🛡 Financial Health Score');
+  const scoreColor=d.scoreNum>=75?'green':d.scoreNum>=50?'amber':'red';
+  // Score badge
+  doc.setFillColor(240,244,248);
+  doc.roundedRect(pad,y,W-pad*2,14,2,2,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  if(scoreColor==='green') doc.setTextColor(5,150,105);
+  else if(scoreColor==='amber') doc.setTextColor(180,100,6);
+  else doc.setTextColor(220,38,38);
+  doc.text(d.scoreNum+'/100',pad+4,y+10);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.setTextColor(70,85,105);
+  doc.text(d.scoreLabel,pad+30,y+7);
+  doc.text('Overall financial health',pad+30,y+12);
+  y+=20;
+  d.guardrails.forEach(g=>{
+    if(y>275){doc.addPage();y=20;}
+    const gc=g.status==='ok'?[5,150,105]:g.status==='caution'?[180,100,6]:[220,38,38];
+    doc.setFillColor(...gc);
+    doc.circle(pad+3,y-0.5,1.5,'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(15,45,82);
+    doc.text(g.name,pad+7,y);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(...gc);
+    doc.text(g.text,W-pad-2,y,{align:'right'});
+    doc.setDrawColor(226,232,240);
+    doc.setLineWidth(0.2);
+    doc.line(pad,y+2.5,W-pad,y+2.5);
+    y+=8;
+  });
+
+  // Footer
+  const pages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pages;i++){
+    doc.setPage(i);
+    doc.setFillColor(240,244,248);
+    doc.rect(0,285,W,12,'F');
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7);
+    doc.setTextColor(148,163,184);
+    doc.text('Generated by Wealthwise · For personal reference only · Not financial advice',W/2,292,{align:'center'});
+    doc.text('Page '+i+' of '+pages,W-pad,292,{align:'right'});
+  }
+
+  doc.save('wealthwise-report.pdf');
+}
+
+function copyReportText(){
+  const d=getReportData();
+  if(d.inc<=0){alert('Please enter your income first.');return;}
+  const text=`WEALTHWISE FINANCIAL REPORT\n${new Date().toLocaleDateString()}\n\n💰 CASH FLOW\nIncome: ${fmt(d.inc)}/mo\nExpenses: ${fmt(d.exp)}/mo\nInvestable: ${fmt(d.inv)}/mo\nSavings Rate: ${pct(d.savR)}\n\n📊 ETF ALLOCATION (Age ${S.age})\nVTI: ${d.us}% | VXUS: ${d.intl}% | BND: ${d.bond}%\n\n🏔 RETIREMENT\nMonthly: ${fmt(d.monthly)} @ ${pct(S.rate*100)}/yr for ${d.yrs} yrs\nProjected at 65: ${fmt(d.fv)}\nTotal contributed: ${fmt(d.contrib)} | Growth: +${fmt(d.growth)}\n\n🛡 HEALTH SCORE: ${d.scoreNum}/100 — ${d.scoreLabel}\n${d.guardrails.map(g=>`${g.status==='ok'?'✅':g.status==='caution'?'⚠️':'🚨'} ${g.name}: ${g.text}`).join('\n')}`;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=$('shareBtn');
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.innerHTML='📋 Copy Summary to Clipboard';},2000);
+  });
+}
+
+// REPORT
+function generateReport(){
+  if(S.income<=0){
+    $('reportOutput').style.display='none';
+    $('reportEmpty').style.display='block';
+    return;
+  }
+  const inv=Math.max(0,S.income-S.expenses);
+  const savR=S.income>0?(inv/S.income)*100:0;
+  const spR=S.income>0?(S.expenses/S.income)*100:0;
+  const m=parseFloat($('monthlyInvest').value)||S.monthly||0;
+  const yrs=Math.max(0,65-S.age);
+  const mos=yrs*12;
+  const rM=S.rate/12;
+  const fv=rM===0?m*mos:m*((Math.pow(1+rM,mos)-1)/rM);
+  const contrib=m*mos;
+  const growth=fv-contrib;
+  const st=Math.min(90,Math.max(50,110-S.age));
+  const bond=100-st;
+  const us=Math.round(st*0.75);
+  const intl=st-us;
+  const scoreNum=parseInt($('scoreNum').textContent)||0;
+  const scoreLabel=$('scoreLabel').textContent||'';
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  $('rpt-title').textContent='Your Financial Plan';
+  $('rpt-date').textContent='Generated on '+dateStr;
+  $('rpt-score').textContent=scoreNum+'/100';
+
+  $('rpt-income').textContent=fmt(S.income)+'/mo';
+  $('rpt-expenses').textContent=fmt(S.expenses)+'/mo';
+  $('rpt-investable').textContent=fmt(inv)+'/mo';
+  const srEl=$('rpt-savings-rate');
+  srEl.textContent=pct(savR);
+  srEl.className='report-row-value '+(savR>=20?'green':savR>=10?'amber':'red');
+  $('rpt-annual').textContent=fmt(inv*12)+'/yr';
+
+  $('rpt-age').textContent=S.age+' years old';
+  $('rpt-stocks').textContent=st+'%';
+  $('rpt-bonds').textContent=bond+'%';
+  $('rpt-etfs').innerHTML=[
+    {ticker:'VTI',pct:us,color:'#0C8A7B'},
+    {ticker:'VXUS',pct:intl,color:'#7C3AED'},
+    {ticker:'BND',pct:bond,color:'#2563EB'},
+  ].map(e=>`<div class="report-etf-tag"><div class="report-etf-dot" style="background:${e.color}"></div>${e.ticker} — ${e.pct}%</div>`).join('');
+
+  $('rpt-monthly').textContent=fmt(m)+'/mo';
+  $('rpt-rate').textContent=pct(S.rate*100)+' annually';
+  $('rpt-years').textContent=yrs+' years (to age 65)';
+  $('rpt-contrib').textContent=fmt(contrib);
+  $('rpt-growth').textContent='+'+fmt(growth);
+  $('rpt-fv').textContent=fmt(fv);
+
+  const guardrails=[
+    {icon:'💸',label:'Savings Rate',status:savR>=20?'ok':savR>=10?'caution':'danger',text:pct(savR)+' of income'},
+    {icon:'🏠',label:'Spending Control',status:spR<70?'ok':spR<85?'caution':'danger',text:pct(spR)+' on expenses'},
+    {icon:'📅',label:'Investing Consistency',status:m>=200?'ok':m>=50?'caution':'danger',text:fmt(m)+'/month'},
+    {icon:'⏳',label:'Time Advantage',status:S.age<=25?'ok':S.age<=30?'caution':'danger',text:yrs+' yrs of compounding'},
+  ];
+  $('rpt-guardrails').innerHTML=guardrails.map(g=>`<div class="report-guardrail"><span class="report-gr-icon">${g.icon}</span><span class="report-gr-label">${g.label}</span><span class="report-gr-status ${g.status}">${g.text}</span></div>`).join('');
+
+  const insights=[];
+  if(savR>=20) insights.push(`<strong>Savings Rate ✅</strong> Your ${pct(savR)} savings rate puts you ahead of the majority of people your age. Keep automating.`);
+  else insights.push(`<strong>Boost Your Savings 📈</strong> Increasing your savings rate to 20% would add ${fmt((S.income*0.2-inv)*12)}/year toward your future.`);
+  if(fv>=1e6) insights.push(`<strong>Millionaire Track 🎯</strong> At your current pace you'll accumulate ${fmt(fv)} by retirement — over ${fmt(growth)} from compound growth alone.`);
+  if(S.age<=25) insights.push(`<strong>Time Is Your Greatest Asset ⏳</strong> Starting at ${S.age} gives every dollar you invest today the power to grow to ${fmt(Math.pow(1.07,65-S.age))} by age 65.`);
+  if(spR>75) insights.push(`<strong>Watch Expenses ⚠️</strong> Spending ${pct(spR)} of income leaves thin margins. The 50/30/20 rule (needs/wants/savings) is a proven framework.`);
+  insights.push(`<strong>Stay Consistent 🔄</strong> Missing just 6 months of contributions at your age costs you ${fmt(m*6*Math.pow(1.07,(65-S.age)))} at retirement.`);
+  $('rpt-insights').innerHTML=insights.map(i=>`<div class="report-insight">${i}</div>`).join('');
+
+  $('reportEmpty').style.display='none';
+  $('reportOutput').style.display='block';
+}
+
+// EVENTS
+$('income').addEventListener('input',()=>{updateIncome();saveState();});
+$('expenses').addEventListener('input',()=>{updateIncome();saveState();});
+$('age').addEventListener('input',function(){S.age=parseInt(this.value);$('ageNum').textContent=S.age;updateAlloc();updateScore();saveState();});
+$('monthlyInvest').addEventListener('input',function(){this._manual=true;S.monthly=parseFloat(this.value)||0;updateProjection();updateScore();saveState();});
+$('ratePills').addEventListener('click',function(e){const p=e.target.closest('.rpill');if(!p)return;document.querySelectorAll('.rpill').forEach(x=>x.classList.remove('active'));p.classList.add('active');S.rate=parseFloat(p.dataset.rate);updateProjection();saveState();});
+$('scoreTopBtn').addEventListener('click',()=>switchTab('behavior'));
+window.addEventListener('resize',()=>{if(S.monthly>0||parseFloat($('monthlyInvest').value)>0)updateProjection();});
+
+// INIT — load saved data first, then run UI
+const restored = loadSavedState();
+updateAlloc();
+if (restored && S.income > 0) updateIncome();
+</script>
+</body>
+</html>
